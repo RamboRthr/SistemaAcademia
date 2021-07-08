@@ -10,14 +10,26 @@ namespace SistemaAcademia.Dominio
         public double Mensalidade { get; set; }
         public bool PagouMensalidade { get; set; }
         
-        public void ReceberDados(string nome, string cpf, string rg, string plano, double mensalidade)
+        public void GetDados(string nome, string cpf, string rg)
         {
             Nome = nome;
             CPF = cpf;
             RG = rg;
-            Plano = plano;
-            Mensalidade = mensalidade;
+            PagouMensalidade = false; //Ainda não pagou
+        }
 
+        public override string ToString()
+        {
+            string statusMensalidade;
+            if (PagouMensalidade)
+            {
+                statusMensalidade = "paga";
+            }
+            else
+            {
+                statusMensalidade = "pendente";
+            }
+            return $"{Nome} - Mensalidade {statusMensalidade}";
         }
     }
 }

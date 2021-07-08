@@ -7,12 +7,11 @@ namespace SistemaAcademia.Dominio
     class Academia
     {
         public List<Aluno> alunos = new List<Aluno>();
-        public void AdicionarAluno(Aluno aluno, string nome, string cpf, string rg, string plano, double mensalidade, System.Windows.Forms.ListBox listBox)
+        public void AddAluno(Aluno aluno, string nome, string cpf, string rg, System.Windows.Forms.ListBox listBox)
         {
             alunos.Add(aluno);
-            listBox.Items.Add(aluno.Nome);
-            aluno.ReceberDados(nome, cpf, rg, plano, mensalidade);
-
+            aluno.GetDados(nome, cpf, rg);
+            listBox.Items.Add(aluno.ToString());
 
         }
         public void GetPlano(Aluno aluno, System.Windows.Forms.RadioButton radioButtonStandard, System.Windows.Forms.RadioButton radioButtonPremium)
@@ -22,6 +21,7 @@ namespace SistemaAcademia.Dominio
                 aluno.Plano = "Standard";
                 aluno.Mensalidade = 100.00;
             }
+
             else if (radioButtonPremium.Checked)
             {
                 aluno.Plano = "Premium";

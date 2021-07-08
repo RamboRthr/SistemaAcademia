@@ -15,34 +15,59 @@ namespace SistemaAcademia
     {
         Academia academia;
         Aluno aluno;
+        bool novo;
+        bool atualizandoCadastro = false;
         public Form1()
         {
             InitializeComponent();
-            bool novo;
+            novo = true;
             academia = new Academia();
             aluno = new Aluno();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string plano = "";
-            double mensalidade = 0;
-            if (rbtnPremium.Checked)
-            {
-                plano = "Premium";
-                mensalidade = 175.00;
-            }
-            else if (rbtnStandard.Checked)
-            {
-                plano = "Standard";
-                mensalidade = 100.00;
-            }
 
-            if (TudoPreenchido())
+            if (novo)
             {
-                academia.AdicionarAluno(aluno, txtNome.Text, mtxtCPF.Text, mtxtRG.Text, plano, mensalidade, listBox1);
+                if (TudoPreenchido())
+                {
+                    academia.GetPlano(aluno, rbtnStandard, rbtnPremium);
+                    academia.AddAluno(aluno, txtNome.Text, mtxtCPF.Text, mtxtRG.Text, listBox1);
+                    novo = false;
 
+                }
+                else
+                {
+                    lblAviso.Visible = true;
+                    timer1.Start();
+                }
             }
+            else
+            {
+                if (atualizandoCadastro)
+                {
+                    if (TudoPreenchido())
+                    {
+                        academia.GetPlano(academia.alunos[listBox1.SelectedIndex], rbtnStandard, rbtnPremium);
+                        academia.alunos[listBox1.SelectedIndex].GetDados(txtNome.Text, mtxtCPF.Text, mtxtRG.Text);
+                        btnCadastrar.Text = "Cadastrar";
+                    }
+                    else
+                    {
+                        lblAviso.Visible = true;
+                        timer1.Start();
+                    }
+
+                }
+                else
+                {
+                    lblAviso3.Visible = true;
+                    timer1.Start();
+                }
+                
+            }
+            
         }
         private bool TudoPreenchido()
         {
@@ -62,6 +87,109 @@ namespace SistemaAcademia
             {
                 return false;
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            lblAviso.Visible = false;
+            lblAviso2.Visible = false;
+            lblAviso3.Visible = false;
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnPagar.Visible = true;
+            btnExcluir.Visible = true;
+            btnEditar.Visible = true;
+
+            novo = false;
+
+        }
+
+        private void btnPagar_Click(object sender, EventArgs e)
+        {
+            if (academia.alunos[listBox1.SelectedIndex].PagouMensalidade)
+            {
+                lblAviso2.Visible = true;
+                timer1.Start();
+            }
+            else
+            {
+                academia.alunos[listBox1.SelectedIndex].PagouMensalidade = true;
+
+                listBox1.SelectedItem = aluno.ToString();
+                listBox1.Refresh();
+
+            }
+            
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        
+
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex >= 0)
+            {
+                academia.alunos.RemoveAt(listBox1.SelectedIndex);
+                listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+
+            }
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedIndex >= 0)
+            {
+                txtNome.Text = academia.alunos[listBox1.SelectedIndex].Nome;
+                mtxtCPF.Text = academia.alunos[listBox1.SelectedIndex].CPF;
+                mtxtRG.Text = academia.alunos[listBox1.SelectedIndex].RG;
+                if (academia.alunos[listBox1.SelectedIndex].Plano == "Standard")
+                {
+                    rbtnStandard.Checked = true;
+                }
+                else
+                {
+                    rbtnPremium.Checked = true;
+                }
+
+                btnCadastrar.Text = "Atualizar";
+                atualizandoCadastro = true;
+            }
+
+        }
+
+        private void btnNovo_Click(object sender, EventArgs e)
+        {
+            novo = true;
+
+            listBox1.SelectedIndex = -1;
+            HideButton(btnEditar);
+            HideButton(btnExcluir);
+            HideButton(btnPagar);
+
+        }
+
+        private void btnLimpar_Click(object sender, EventArgs e)
+        {
+            txtNome.Text = "";
+            mtxtCPF.Text = "";
+            mtxtRG.Text = "";
+            rbtnPremium.Checked = false;
+            rbtnStandard.Checked = false;
+
+            listBox1.SelectedIndex = -1;
+            atualizandoCadastro = false;
+
+        }
+
+        private void HideButton(Button button)
+        {
+            button.Visible = false;
         }
     }
 }
