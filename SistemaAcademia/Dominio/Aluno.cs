@@ -6,8 +6,8 @@ namespace SistemaAcademia.Dominio
 {
     class Aluno : Pessoa
     {
-        public string Plano { get; set; }
-        public double Mensalidade { get; set; }
+        public string Plano { get; private set; }
+        public double Mensalidade { get; private set; }
         public bool PagouMensalidade { get; set; }
         
         public void GetDados(string nome, string cpf, string rg)
@@ -30,6 +30,23 @@ namespace SistemaAcademia.Dominio
                 statusMensalidade = "pendente";
             }
             return $"{Nome} - Mensalidade {statusMensalidade}";
+        }
+
+        public void GetPlano(System.Windows.Forms.RadioButton radioButtonStandard, System.Windows.Forms.RadioButton radioButtonPremium)
+        {
+            if (radioButtonStandard.Checked)
+            {
+                Plano = "Standard";
+                Mensalidade = 100.00;
+            }
+
+            else if (radioButtonPremium.Checked)
+            {
+                Plano = "Premium";
+                Mensalidade = 175.00;
+            }
+
+
         }
     }
 }

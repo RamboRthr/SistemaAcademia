@@ -32,7 +32,7 @@ namespace SistemaAcademia
             {
                 if (TudoPreenchido())
                 {
-                    academia.GetPlano(aluno, rbtnStandard, rbtnPremium);
+                    aluno.GetPlano(rbtnStandard, rbtnPremium);
                     academia.AddAluno(aluno, txtNome.Text, mtxtCPF.Text, mtxtRG.Text, listBox1);
                     novo = false;
 
@@ -49,7 +49,7 @@ namespace SistemaAcademia
                 {
                     if (TudoPreenchido())
                     {
-                        academia.GetPlano(academia.alunos[listBox1.SelectedIndex], rbtnStandard, rbtnPremium);
+                        aluno.GetPlano(rbtnStandard, rbtnPremium);
                         academia.alunos[listBox1.SelectedIndex].GetDados(txtNome.Text, mtxtCPF.Text, mtxtRG.Text);
                         btnCadastrar.Text = "Cadastrar";
                     }
