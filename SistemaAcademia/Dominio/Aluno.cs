@@ -4,20 +4,15 @@ using System.Text;
 
 namespace SistemaAcademia.Dominio
 {
-    class Aluno : Pessoa
+    class Aluno : Pessoa, IGetDados
     {
         public string Plano { get; private set; }
         public double Mensalidade { get; private set; }
         public bool PagouMensalidade { get; set; }
-        
-        public void GetDados(string nome, string cpf, string rg)
+        public Aluno()
         {
-            Nome = nome;
-            CPF = cpf;
-            RG = rg;
-            PagouMensalidade = false; //Ainda não pagou
+            PagouMensalidade = false;
         }
-
         public override string ToString()
         {
             string statusMensalidade;
@@ -45,8 +40,14 @@ namespace SistemaAcademia.Dominio
                 Plano = "Premium";
                 Mensalidade = 175.00;
             }
+        }
 
-
+        public void GetDados(string nome, string cpf, string rg)
+        {
+            Nome = nome;
+            CPF = cpf;
+            RG = rg;
+            
         }
     }
 }

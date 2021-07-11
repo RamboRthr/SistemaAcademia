@@ -27,7 +27,6 @@ namespace SistemaAcademia
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             if (novo)
             {
                 if (TudoPreenchido())
@@ -35,7 +34,6 @@ namespace SistemaAcademia
                     aluno.GetPlano(rbtnStandard, rbtnPremium);
                     academia.AddAluno(aluno, txtNome.Text, mtxtCPF.Text, mtxtRG.Text, listBox1);
                     novo = false;
-
                 }
                 else
                 {
@@ -58,17 +56,15 @@ namespace SistemaAcademia
                         lblAviso.Visible = true;
                         timer1.Start();
                     }
-
                 }
                 else
                 {
                     lblAviso3.Visible = true;
                     timer1.Start();
                 }
-                
             }
-            
         }
+
         private bool TudoPreenchido()
         {
             if (!String.IsNullOrEmpty(txtNome.Text) && !String.IsNullOrEmpty(mtxtCPF.Text) && !String.IsNullOrEmpty(txtNome.Text))
@@ -81,7 +77,6 @@ namespace SistemaAcademia
                 {
                     return false;
                 }
-
             }
             else
             {
@@ -108,28 +103,21 @@ namespace SistemaAcademia
 
         private void btnPagar_Click(object sender, EventArgs e)
         {
-            if (academia.alunos[listBox1.SelectedIndex].PagouMensalidade)
+            if (listBox1.SelectedIndex >= 0)
             {
-                lblAviso2.Visible = true;
-                timer1.Start();
+                if (academia.alunos[listBox1.SelectedIndex].PagouMensalidade)
+                {
+                    lblAviso2.Visible = true;
+                    timer1.Start();
+                }
+                else
+                {
+                    academia.alunos[listBox1.SelectedIndex].PagouMensalidade = true;
+                    listBox1.SelectedItem = aluno.ToString();
+                    listBox1.Refresh();
+                }
             }
-            else
-            {
-                academia.alunos[listBox1.SelectedIndex].PagouMensalidade = true;
-
-                listBox1.SelectedItem = aluno.ToString();
-                listBox1.Refresh();
-
-            }
-            
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        
 
         private void btnExcluir_Click(object sender, EventArgs e)
         {
@@ -137,7 +125,6 @@ namespace SistemaAcademia
             {
                 academia.alunos.RemoveAt(listBox1.SelectedIndex);
                 listBox1.Items.RemoveAt(listBox1.SelectedIndex);
-
             }
         }
 
@@ -156,11 +143,9 @@ namespace SistemaAcademia
                 {
                     rbtnPremium.Checked = true;
                 }
-
                 btnCadastrar.Text = "Atualizar";
                 atualizandoCadastro = true;
             }
-
         }
 
         private void btnNovo_Click(object sender, EventArgs e)
@@ -168,10 +153,10 @@ namespace SistemaAcademia
             novo = true;
 
             listBox1.SelectedIndex = -1;
+
             HideButton(btnEditar);
             HideButton(btnExcluir);
             HideButton(btnPagar);
-
         }
 
         private void btnLimpar_Click(object sender, EventArgs e)
@@ -184,7 +169,6 @@ namespace SistemaAcademia
 
             listBox1.SelectedIndex = -1;
             atualizandoCadastro = false;
-
         }
 
         private void HideButton(Button button)
