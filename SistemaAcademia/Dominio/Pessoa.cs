@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SistemaAcademia.Dominio
 {
-    abstract class Pessoa
+    public abstract class Pessoa
     {
         public string Nome { get; set; }
         public string CPF { get; set; }
