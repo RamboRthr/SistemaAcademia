@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SistemaAcademia.Dominio
 {
-    class Aluno : Pessoa, IGetDados
+    public class Aluno : Pessoa, IGetDados
     {
         public string Plano { get; private set; }
         public double Mensalidade { get; private set; }

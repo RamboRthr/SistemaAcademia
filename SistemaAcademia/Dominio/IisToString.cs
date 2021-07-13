@@ -4,8 +4,8 @@ using System.Text;
 
 namespace SistemaAcademia.Dominio
 {
-    public interface IGetDados
+    interface IisToString
     {
-        void GetDados(string nome, string cpf, string rg);
+        string ToString();
     }
 }

@@ -11,17 +11,17 @@ using System.Windows.Forms;
 
 namespace SistemaAcademia
 {
-    public partial class Form1 : Form
+    public partial class CadastroAlunos : Form, IValidaCampos
     {
-        Academia academia;
+        Academia _academia;
         Aluno aluno;
         bool novo;
         bool atualizandoCadastro = false;
-        public Form1()
+        public CadastroAlunos(Academia academia)
         {
             InitializeComponent();
+            _academia = academia;
             novo = true;
-            academia = new Academia();
             aluno = new Aluno();
         }
 
@@ -32,7 +32,7 @@ namespace SistemaAcademia
                 if (TudoPreenchido())
                 {
                     aluno.GetPlano(rbtnStandard, rbtnPremium);
-                    academia.AddAluno(aluno, txtNome.Text, mtxtCPF.Text, mtxtRG.Text, listBox1);
+                    _academia.AddAluno(aluno, txtNome.Text, mtxtCPF.Text, mtxtRG.Text, listBox1);
                     novo = false;
                 }
                 else
@@ -48,7 +48,7 @@ namespace SistemaAcademia
                     if (TudoPreenchido())
                     {
                         aluno.GetPlano(rbtnStandard, rbtnPremium);
-                        academia.alunos[listBox1.SelectedIndex].GetDados(txtNome.Text, mtxtCPF.Text, mtxtRG.Text);
+                        _academia.alunos[listBox1.SelectedIndex].GetDados(txtNome.Text, mtxtCPF.Text, mtxtRG.Text);
                         btnCadastrar.Text = "Cadastrar";
                     }
                     else
@@ -65,7 +65,7 @@ namespace SistemaAcademia
             }
         }
 
-        private bool TudoPreenchido()
+        public bool TudoPreenchido()
         {
             if (!String.IsNullOrEmpty(txtNome.Text) && !String.IsNullOrEmpty(mtxtCPF.Text) && !String.IsNullOrEmpty(txtNome.Text))
             {
@@ -105,14 +105,14 @@ namespace SistemaAcademia
         {
             if (listBox1.SelectedIndex >= 0)
             {
-                if (academia.alunos[listBox1.SelectedIndex].PagouMensalidade)
+                if (_academia.alunos[listBox1.SelectedIndex].PagouMensalidade)
                 {
                     lblAviso2.Visible = true;
                     timer1.Start();
                 }
                 else
                 {
-                    academia.alunos[listBox1.SelectedIndex].PagouMensalidade = true;
+                    _academia.alunos[listBox1.SelectedIndex].PagouMensalidade = true;
                     listBox1.SelectedItem = aluno.ToString();
                     listBox1.Refresh();
                 }
@@ -123,7 +123,7 @@ namespace SistemaAcademia
         {
             if (listBox1.SelectedIndex >= 0)
             {
-                academia.alunos.RemoveAt(listBox1.SelectedIndex);
+                _academia.alunos.RemoveAt(listBox1.SelectedIndex);
                 listBox1.Items.RemoveAt(listBox1.SelectedIndex);
             }
         }
@@ -132,10 +132,10 @@ namespace SistemaAcademia
         {
             if (listBox1.SelectedIndex >= 0)
             {
-                txtNome.Text = academia.alunos[listBox1.SelectedIndex].Nome;
-                mtxtCPF.Text = academia.alunos[listBox1.SelectedIndex].CPF;
-                mtxtRG.Text = academia.alunos[listBox1.SelectedIndex].RG;
-                if (academia.alunos[listBox1.SelectedIndex].Plano == "Standard")
+                txtNome.Text = _academia.alunos[listBox1.SelectedIndex].Nome;
+                mtxtCPF.Text = _academia.alunos[listBox1.SelectedIndex].CPF;
+                mtxtRG.Text = _academia.alunos[listBox1.SelectedIndex].RG;
+                if (_academia.alunos[listBox1.SelectedIndex].Plano == "Standard")
                 {
                     rbtnStandard.Checked = true;
                 }
@@ -154,9 +154,9 @@ namespace SistemaAcademia
 
             listBox1.SelectedIndex = -1;
 
-            HideButton(btnEditar);
-            HideButton(btnExcluir);
-            HideButton(btnPagar);
+            HideElement(btnEditar);
+            HideElement(btnExcluir);
+            HideElement(btnPagar);
         }
 
         private void btnLimpar_Click(object sender, EventArgs e)
@@ -171,9 +171,10 @@ namespace SistemaAcademia
             atualizandoCadastro = false;
         }
 
-        private void HideButton(Button button)
+        private void HideElement(Control control = null)
         {
-            button.Visible = false;
+            control.Visible = false;
+            
         }
     }
 }

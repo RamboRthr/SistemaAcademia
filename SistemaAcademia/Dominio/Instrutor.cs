@@ -4,10 +4,15 @@ using System.Text;
 
 namespace SistemaAcademia.Dominio
 {
-    class Instrutor : Pessoa, IGetDados
+    public class Instrutor : Pessoa, IGetDados, IisToString
     {
         public double Salario { get; private set; }
-        public string Funcao { get; private set; }
+        public string Modalidade { get; private set; }
+        public bool RecebeuSalario { get; set; }
+        public Instrutor()
+        {
+            RecebeuSalario = false;
+        }
         public void GetDados(string nome, string cpf, string rg)
         {
             Nome = nome;
@@ -15,11 +20,12 @@ namespace SistemaAcademia.Dominio
             RG = rg;
 
         }
-        public void GetFuncao(System.Windows.Forms.ComboBox comboBoxFuncao)
+
+        public void GetModalidade(System.Windows.Forms.ComboBox comboBoxFuncao)
         {
-            string funcao = comboBoxFuncao.SelectedItem.ToString();
-            Funcao = funcao;
-            switch (funcao)
+            string modalidade = comboBoxFuncao.SelectedItem.ToString();
+            Modalidade = modalidade;
+            switch (modalidade)
             {
                 case "Musculação":
                     Salario = 3500.00;
@@ -41,5 +47,20 @@ namespace SistemaAcademia.Dominio
                     break;
             }
         }
+
+        public override string ToString()
+        {
+            string statusPagamento;
+            if (RecebeuSalario)
+            {
+                statusPagamento = "pago";
+            }
+            else
+            {
+                statusPagamento = "pendente";
+            }
+            return $"{Nome} - {Modalidade} - Salário: {statusPagamento}";
+        }
     }
+    
 }
