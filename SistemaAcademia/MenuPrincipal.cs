@@ -13,9 +13,9 @@ namespace SistemaAcademia
     {
         Academia academia;
         public MenuPrincipal()
-        {
-            academia = new Academia();
+        { 
             InitializeComponent();
+            academia = Academia.Instancia;
         }
 
         private void button1_Click(object sender, EventArgs e)

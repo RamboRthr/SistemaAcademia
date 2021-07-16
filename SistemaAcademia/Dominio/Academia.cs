@@ -4,24 +4,47 @@ using System.Text;
 
 namespace SistemaAcademia.Dominio
 {
-    public class Academia
-    {
-        public List<Aluno> alunos = new List<Aluno>();
-        public List<Instrutor> instrutores = new List<Instrutor>();
+    public sealed class Academia
+    { 
+        public List<Aluno> ListaAlunos { get; private set; }
+        public List<Instrutor> ListaInstrutores { get; set; }
+        public int NrPlanosStandard { get; set; }
+        public int NrPlanosPremium { get; set; }
 
-        public void AddAluno(Aluno aluno, string nome, string cpf, string rg, System.Windows.Forms.ListBox listBox)
+        private static readonly Academia instancia = new Academia();
+        static Academia() { }
+        public Academia()
         {
-            alunos.Add(aluno);
+            ListaAlunos = new List<Aluno>();
+            ListaInstrutores = new List<Instrutor>();
+            NrPlanosPremium = 0;
+            NrPlanosStandard = 0;
+
+        }
+        
+        
+        public static Academia Instancia
+        {
+            get
+            {
+                return instancia;
+            }
+        }
+        
+
+        public void AddAluno(Aluno aluno, string nome, string cpf, string rg)
+        {
+            ListaAlunos.Add(aluno);
             aluno.GetDados(nome, cpf, rg);
-            listBox.Items.Add(aluno.ToString());
+            
 
         }
 
-        public void AddInstrutor(Instrutor instrutor, string nome, string cpf, string rg, System.Windows.Forms.ListBox listBox)
+        public void AddInstrutor(Instrutor instrutor, string nome, string cpf, string rg)
         {
-            instrutores.Add(instrutor);
+            ListaInstrutores.Add(instrutor);
             instrutor.GetDados(nome, cpf, rg);
-            listBox.Items.Add(instrutor.ToString());
+            
         }
         
 

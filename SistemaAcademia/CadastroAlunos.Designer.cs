@@ -215,7 +215,7 @@ namespace SistemaAcademia
             this.btnPagar.Font = new System.Drawing.Font("Candara", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.btnPagar.Location = new System.Drawing.Point(367, 246);
             this.btnPagar.Name = "btnPagar";
-            this.btnPagar.Size = new System.Drawing.Size(140, 28);
+            this.btnPagar.Size = new System.Drawing.Size(157, 28);
             this.btnPagar.TabIndex = 17;
             this.btnPagar.Text = "Confirmar Pagamento";
             this.btnPagar.UseVisualStyleBackColor = true;
@@ -255,7 +255,7 @@ namespace SistemaAcademia
             this.lblAviso2.AutoSize = true;
             this.lblAviso2.Font = new System.Drawing.Font("Candara", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lblAviso2.ForeColor = System.Drawing.Color.SlateBlue;
-            this.lblAviso2.Location = new System.Drawing.Point(513, 249);
+            this.lblAviso2.Location = new System.Drawing.Point(530, 249);
             this.lblAviso2.Name = "lblAviso2";
             this.lblAviso2.Size = new System.Drawing.Size(156, 18);
             this.lblAviso2.TabIndex = 20;

@@ -20,7 +20,7 @@ namespace SistemaAcademia
             InitializeComponent();
             _academia = academia;
             novo = true;
-            instrutor = new Instrutor();
+            
         }
 
         private void btnCadastrar_Click(object sender, EventArgs e)
@@ -29,8 +29,9 @@ namespace SistemaAcademia
             {
                 if (TudoPreenchido())
                 {
+                    instrutor = new Instrutor();
                     instrutor.GetModalidade(comboBox1);
-                    _academia.AddInstrutor(instrutor, txtNome.Text, mtxtCPF.Text, mtxtRG.Text, listBox1);
+                    _academia.AddInstrutor(instrutor, txtNome.Text, mtxtCPF.Text, mtxtRG.Text);
                     novo = false;
                 }
                 else
@@ -46,7 +47,7 @@ namespace SistemaAcademia
                     if (TudoPreenchido())
                     {
                         instrutor.GetModalidade(comboBox1);
-                        _academia.instrutores[listBox1.SelectedIndex].GetDados(txtNome.Text, mtxtCPF.Text, mtxtRG.Text);
+                        _academia.ListaInstrutores[listBox1.SelectedIndex].GetDados(txtNome.Text, mtxtCPF.Text, mtxtRG.Text);
                         btnCadastrar.Text = "Cadastrar";
                     }
                     else
@@ -97,14 +98,14 @@ namespace SistemaAcademia
         {
             if (listBox1.SelectedIndex >= 0)
             {
-                if (_academia.instrutores[listBox1.SelectedIndex].RecebeuSalario)
+                if (_academia.ListaInstrutores[listBox1.SelectedIndex].RecebeuSalario)
                 {
                     lblAviso2.Visible = true;
                     timer1.Start();
                 }
                 else
                 {
-                    _academia.instrutores[listBox1.SelectedIndex].RecebeuSalario = true;
+                    _academia.ListaInstrutores[listBox1.SelectedIndex].RecebeuSalario = true;
                     
                 }
             }
@@ -120,7 +121,7 @@ namespace SistemaAcademia
         {
             if (listBox1.SelectedIndex >= 0)
             {
-                _academia.instrutores.RemoveAt(listBox1.SelectedIndex);
+                _academia.ListaInstrutores.RemoveAt(listBox1.SelectedIndex);
                 listBox1.Items.RemoveAt(listBox1.SelectedIndex);
             }
         }
@@ -129,10 +130,10 @@ namespace SistemaAcademia
         {
             if (listBox1.SelectedIndex >= 0)
             {
-                txtNome.Text = _academia.instrutores[listBox1.SelectedIndex].Nome;
-                mtxtCPF.Text = _academia.instrutores[listBox1.SelectedIndex].CPF;
-                mtxtRG.Text = _academia.instrutores[listBox1.SelectedIndex].RG;
-                comboBox1.Text = _academia.instrutores[listBox1.SelectedIndex].Modalidade;
+                txtNome.Text = _academia.ListaInstrutores[listBox1.SelectedIndex].Nome;
+                mtxtCPF.Text = _academia.ListaInstrutores[listBox1.SelectedIndex].CPF;
+                mtxtRG.Text = _academia.ListaInstrutores[listBox1.SelectedIndex].RG;
+                comboBox1.Text = _academia.ListaInstrutores[listBox1.SelectedIndex].Modalidade;
                 btnCadastrar.Text = "Atualizar";
                 atualizandoCadastro = true;
             }
