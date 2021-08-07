@@ -33,6 +33,7 @@ namespace SistemaAcademia
                     instrutor.GetModalidade(comboBox1);
                     _academia.AddInstrutor(instrutor, txtNome.Text, mtxtCPF.Text, mtxtRG.Text);
                     novo = false;
+                    AtualizarLista();
                 }
                 else
                 {
@@ -49,6 +50,7 @@ namespace SistemaAcademia
                         instrutor.GetModalidade(comboBox1);
                         _academia.ListaInstrutores[listBox1.SelectedIndex].GetDados(txtNome.Text, mtxtCPF.Text, mtxtRG.Text);
                         btnCadastrar.Text = "Cadastrar";
+                        AtualizarLista();
                     }
                     else
                     {
@@ -106,7 +108,7 @@ namespace SistemaAcademia
                 else
                 {
                     _academia.ListaInstrutores[listBox1.SelectedIndex].RecebeuSalario = true;
-                    
+                    AtualizarLista();
                 }
             }
         }
@@ -161,5 +163,15 @@ namespace SistemaAcademia
             listBox1.SelectedIndex = -1;
             atualizandoCadastro = false;
         }
+        private void AtualizarLista()
+        {
+            listBox1.Items.Clear();
+            foreach (var item in _academia.ListaInstrutores)
+            {
+                listBox1.Items.Add(item);
+
+            }
+        }
     }
+
 }
